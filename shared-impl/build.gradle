@@ -1,0 +1,59 @@
+ext {
+  libphonenumberVersion = '8.9.4'
+  flywayVersion = '5.0.7'
+  jxlsVersion = '2.4.3'
+  jxlsPoiVersion = '1.0.14'
+  xceliteVersion = '1.0.4'
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: "net.ltgt.apt"
+apply plugin: "io.github.divinespear.jpa-schema-generate"
+
+apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/master/impl.gradle'
+
+afterEvaluate {
+  dependencies {
+
+    compile project(':shared-api')
+
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+      exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+    }
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile('org.springframework.boot:spring-boot-starter-cache')
+
+    compile('com.zaxxer:HikariCP:2.7.6')
+
+    // 데이터베이스 로깅
+    runtime('p6spy:p6spy:3.0.0')
+
+    compile("com.googlecode.libphonenumber:libphonenumber:${libphonenumberVersion}")
+
+    // db 마이그레이션
+    compile("org.flywaydb:flyway-core:${flywayVersion}")
+
+    // jackson java 8 time support
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+    // hibernate second level cache by memcached for 5.2.x
+    runtime('com.github.mihaicostin:hibernate-l2-memcached:5.2.10.0')
+
+    // jpa sql 처리
+    compile('com.querydsl:querydsl-jpa')
+
+    compile("org.jxls:jxls:${jxlsVersion}")
+
+    compile("org.jxls:jxls-poi:${jxlsPoiVersion}")
+
+    compile("com.ebay:xcelite:${xceliteVersion}")
+
+    // event 및 mqtt 사용
+    compile("org.apache.activemq:activemq-kahadb-store")
+    compile("org.apache.activemq:activemq-spring")
+    compile("org.apache.activemq:activemq-broker")
+    compile("org.springframework.boot:spring-boot-starter-activemq")
+
+  }
+}
