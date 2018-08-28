@@ -2,7 +2,6 @@ buildscript {
   apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/master/buildscript.gradle'
 }
 
-
 ext {
   linkHomepage = 'https://kkojaeh.github.io/pico-erp-server/#/'
   linkCi = 'https://travis-ci.org/kkojaeh/pico-erp-shared'
@@ -12,10 +11,8 @@ ext {
   linkScmDevConnection = 'scm:git:ssh://git@github.com/kkojaeh/pico-erp-shared.git'
 }
 
-
-
+apply plugin: 'java'
 apply plugin: 'net.researchgate.release'
-
 
 apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/master/parent.gradle'
 
