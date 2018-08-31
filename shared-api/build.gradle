@@ -4,21 +4,20 @@ apply plugin: "net.ltgt.apt"
 
 apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/master/api.gradle'
 
-afterEvaluate {
-  dependencies {
+dependencies {
 
-    compile('org.springframework.security:spring-security-core')
+  compile('org.springframework.security:spring-security-core')
 
-    compile('com.fasterxml.jackson.core:jackson-annotations')
+  compile('com.fasterxml.jackson.core:jackson-annotations')
 
-    // 페이징 등의 컬렉션 등을 사용
-    compile('org.springframework.data:spring-data-commons')
+  // 페이징 등의 컬렉션 등을 사용
+  compile('org.springframework.data:spring-data-commons')
 
-    // 유효성 체크 API
-    compile('javax.validation:validation-api')
+  // 유효성 체크 API
+  compile('javax.validation:validation-api')
 
-    // 에러코드 지정으로 사용
-    compile('org.springframework:spring-web')
+  // 에러코드 지정으로 사용
+  compile('org.springframework:spring-web')
 
-  }
 }
+
