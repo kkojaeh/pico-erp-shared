@@ -37,7 +37,11 @@ public class IntegrationConfiguration implements InitializingBean {
       }
       MapPropertySource mapSource = (MapPropertySource) source;
       for (String name : mapSource.getPropertyNames()) {
-        properties.add(String.format("--%s=%s", name, mapSource.getProperty(name)));
+        Object property = mapSource.getProperty(name);
+        if(property == null || "".equals(property)){
+          continue;
+        }
+        properties.add(String.format("--%s=%s", name, property));
       }
     }
 
