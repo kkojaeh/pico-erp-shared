@@ -1,7 +1,5 @@
 package pico.erp.shared.data;
 
-import java.util.Set;
-
 public interface Role extends LocalizedNameable, LocalizedDescriptable {
 
   @Override
@@ -10,7 +8,5 @@ public interface Role extends LocalizedNameable, LocalizedDescriptable {
   }
 
   String getId();
-
-  Set<Menu> getMenus();
 
 }
