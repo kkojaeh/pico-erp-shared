@@ -59,7 +59,11 @@ public class IntegrationConfiguration implements InitializingBean {
     if (context.getEnvironment().acceptsProfiles("test")) {
       integrator.integrateEventPublisher();
     }
-    integrator.complete();
+    try {
+      integrator.complete();
+    } catch (Throwable t) {
+      context.registerShutdownHook();
+    }
   }
 
 }
