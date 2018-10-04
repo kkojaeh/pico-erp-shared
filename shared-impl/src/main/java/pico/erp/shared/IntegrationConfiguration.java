@@ -62,6 +62,7 @@ public class IntegrationConfiguration implements InitializingBean {
     try {
       integrator.complete();
     } catch (Throwable t) {
+      t.printStackTrace();
       context.registerShutdownHook();
     }
   }
