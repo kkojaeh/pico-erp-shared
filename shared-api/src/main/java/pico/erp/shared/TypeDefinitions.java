@@ -2,6 +2,8 @@ package pico.erp.shared;
 
 public final class TypeDefinitions {
 
+  public static final int UUID_BINARY_LENGTH = 16;
+
   public static final int ADDRESS_DETAIL_LENGTH = 50;
 
   public static final int ADDRESS_POSTAL_LENGTH = 10;
