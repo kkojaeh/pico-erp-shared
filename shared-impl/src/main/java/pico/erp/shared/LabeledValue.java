@@ -1,5 +1,7 @@
 package pico.erp.shared;
 
+import com.querydsl.core.annotations.QueryProjection;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
@@ -19,6 +21,12 @@ public class LabeledValue implements LabeledValuable {
   String value;
 
   String label;
+
+  @QueryProjection
+  public LabeledValue(UUID value, String label) {
+    this.value = value != null ? value.toString() : null;
+    this.label = label;
+  }
 
   public LabeledValue(String value, String label) {
     this.value = value;
@@ -48,6 +56,7 @@ public class LabeledValue implements LabeledValuable {
     }
     return null;
   }
+
 
   @Override
   public String toString() {

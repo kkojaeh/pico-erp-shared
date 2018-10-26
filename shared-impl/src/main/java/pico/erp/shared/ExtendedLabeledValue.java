@@ -1,5 +1,7 @@
 package pico.erp.shared;
 
+import com.querydsl.core.annotations.QueryProjection;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +24,13 @@ public class ExtendedLabeledValue implements LabeledValuable {
   String subLabel;
 
   String stamp;
+
+  @QueryProjection
+  public ExtendedLabeledValue(UUID value, String label, String subLabel, String stamp) {
+    this.value = value != null ? value.toString() : null;
+    this.label = label;
+    this.subLabel = subLabel;
+    this.stamp = stamp;
+  }
 
 }
