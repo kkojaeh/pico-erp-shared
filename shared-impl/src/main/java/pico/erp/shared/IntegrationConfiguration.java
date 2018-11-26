@@ -38,7 +38,7 @@ public class IntegrationConfiguration implements InitializingBean {
       MapPropertySource mapSource = (MapPropertySource) source;
       for (String name : mapSource.getPropertyNames()) {
         Object property = mapSource.getProperty(name);
-        if(property == null || "".equals(property)){
+        if (property == null || "".equals(property)) {
           continue;
         }
         properties.add(String.format("--%s=%s", name, property));
@@ -59,12 +59,7 @@ public class IntegrationConfiguration implements InitializingBean {
     if (context.getEnvironment().acceptsProfiles("test")) {
       integrator.integrateEventPublisher();
     }
-    try {
-      integrator.complete();
-    } catch (Throwable t) {
-      t.printStackTrace();
-      context.registerShutdownHook();
-    }
+    integrator.complete();
   }
 
 }

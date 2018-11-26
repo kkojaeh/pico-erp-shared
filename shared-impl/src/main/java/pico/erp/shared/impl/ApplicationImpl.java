@@ -69,6 +69,7 @@ public class ApplicationImpl implements Application {
     Map<String, ApplicationInitializer> beans = application
       .getBeansOfType(ApplicationInitializer.class);
     beans.values().forEach(ApplicationInitializer::initialize);
+    application.registerShutdownHook();
   }
 
   @Override
