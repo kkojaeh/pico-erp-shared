@@ -55,7 +55,9 @@ public class IntegrationConfiguration implements InitializingBean {
     Collections.sort(starters);
     starters.forEach(
       starter -> integrator.add(starter.start(properties.toArray(new String[properties.size()]))));
-    integrator.integrate().integrateTransaction();
+    integrator.integrate()
+      .integrateTransaction()
+      .integrateMessageSource();
     if (context.getEnvironment().acceptsProfiles("test")) {
       integrator.integrateEventPublisher();
     }

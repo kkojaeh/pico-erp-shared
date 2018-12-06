@@ -8,6 +8,10 @@ import lombok.experimental.Delegate;
 @Builder
 public class ContentInputStream extends InputStream {
 
+  public static final String XLSX_CONTENT_EXTENSION = "xlsx";
+
+  public static final String XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
   @Delegate
   private final InputStream inputStream;
 
