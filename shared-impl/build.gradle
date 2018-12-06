@@ -4,6 +4,7 @@ ext {
   jxlsVersion = '2.4.3'
   jxlsPoiVersion = '1.0.14'
   xceliteVersion = '1.0.4'
+  windmillVersion = '1.2.0'
 }
 
 apply plugin: 'java'
@@ -48,6 +49,8 @@ dependencies {
   compile("org.jxls:jxls-poi:${jxlsPoiVersion}")
 
   compile("com.ebay:xcelite:${xceliteVersion}")
+
+  compile("com.coreoz:windmill:${windmillVersion}")
 
   // event 및 mqtt 사용
   compile("org.apache.activemq:activemq-kahadb-store")
