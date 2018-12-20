@@ -17,7 +17,7 @@ apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/master/impl.gradle'
 
 dependencies {
 
-  compile project(':shared-api')
+  compile project(':api')
 
   compile('org.springframework.boot:spring-boot-starter-data-jpa') {
     exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'

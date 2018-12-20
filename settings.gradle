@@ -1,4 +1,4 @@
 rootProject.name = 'pico-erp-shared'
-include 'shared-api'
-include 'shared-impl'
+include 'api'
+include 'impl'
 
