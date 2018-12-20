@@ -141,14 +141,14 @@ public class SharedConfiguration {
   }
 
   @Bean
-  @ConfigurationPropertiesBinding
-  public Converter offsetDateTimeConverter() {
-    return new OffsetDateTimeConverter();
+  public ErrorHandler loggingErrorHandler() {
+    return new LoggingErrorHandler();
   }
 
   @Bean
-  public ErrorHandler loggingErrorHandler() {
-    return new LoggingErrorHandler();
+  @ConfigurationPropertiesBinding
+  public Converter offsetDateTimeConverter() {
+    return new OffsetDateTimeConverter();
   }
 
   @Bean

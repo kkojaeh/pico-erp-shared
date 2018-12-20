@@ -10,10 +10,10 @@ public interface ApplicationIntegrator {
 
   ApplicationIntegrator integrate();
 
+  ApplicationIntegrator integrateEventPublisher();
+
   ApplicationIntegrator integrateMessageSource();
 
   ApplicationIntegrator integrateTransaction();
-
-  ApplicationIntegrator integrateEventPublisher();
 
 }

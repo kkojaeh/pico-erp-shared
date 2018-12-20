@@ -1,6 +1,5 @@
 package pico.erp.shared;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -52,7 +51,7 @@ public class IntegrationConfiguration implements InitializingBean {
       .filter(starter -> !starter.isWeb())
       .collect(Collectors.toList());
 
-    Collections.sort(starters);
+    ApplicationStarter.sort(starters);
     starters.forEach(
       starter -> integrator.add(starter.start(properties.toArray(new String[properties.size()]))));
     integrator.integrate()
