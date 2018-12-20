@@ -51,7 +51,7 @@ public class IntegrationConfiguration implements InitializingBean {
       .filter(starter -> !starter.isWeb())
       .collect(Collectors.toList());
 
-    ApplicationStarter.sort(starters);
+    starters = ApplicationStarter.sort(starters);
     starters.forEach(
       starter -> integrator.add(starter.start(properties.toArray(new String[properties.size()]))));
     integrator.integrate()

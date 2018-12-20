@@ -1,26 +1,31 @@
 package pico.erp.shared;
 
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import lombok.val;
 
 public interface ApplicationStarter {
 
-  static void sort(List<ApplicationStarter> starters) {
-    val orders = new HashMap<ApplicationId, Integer>();
-    starters.forEach(starter -> {
-      orders.put(starter.getId(), 0);
-    });
-    starters.forEach(starter -> {
-      val order = starter.getDependencies().stream()
-        .map(id -> orders.get(id))
-        .max(Comparator.comparing(i -> i))
-        .orElse(0) + 1;
-      orders.put(starter.getId(), order);
-    });
-    starters.sort(Comparator.comparing(starter -> orders.get(starter.getId())));
+  static List<ApplicationStarter> sort(List<ApplicationStarter> starters) {
+    val result = new LinkedList<ApplicationStarter>();
+    val targets = new LinkedList<ApplicationStarter>(starters);
+
+    outer:
+    while (!targets.isEmpty()) {
+      for (ApplicationStarter target : targets) {
+        val hasDependency = target.getDependencies()
+          .stream()
+          .anyMatch(dependency -> targets.stream().anyMatch(t -> t.getId().equals(dependency)));
+        if (!hasDependency) {
+          targets.remove(target);
+          result.add(target);
+          continue outer;
+        }
+      }
+      throw new RuntimeException("Graph has cycles");
+    }
+    return result;
   }
 
   Set<ApplicationId> getDependencies();
@@ -30,5 +35,6 @@ public interface ApplicationStarter {
   boolean isWeb();
 
   Application start(String... args);
+
 
 }
