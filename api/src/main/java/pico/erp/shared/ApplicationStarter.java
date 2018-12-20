@@ -11,20 +11,24 @@ public interface ApplicationStarter {
     val result = new LinkedList<ApplicationStarter>();
     val targets = new LinkedList<ApplicationStarter>(starters);
 
-    outer:
     while (!targets.isEmpty()) {
+      ApplicationStarter found = null;
       for (ApplicationStarter target : targets) {
         val hasDependency = targets.stream()
           .map(ApplicationStarter::getId)
           .filter(id -> target.getDependencies().contains(id))
           .count() > 0;
         if (!hasDependency) {
-          targets.remove(target);
-          result.add(target);
-          continue outer;
+          found = target;
+          break;
         }
       }
-      throw new RuntimeException("Graph has cycles");
+      if (found == null) {
+        throw new RuntimeException("Graph has cycles");
+      } else {
+        targets.remove(found);
+        result.add(found);
+      }
     }
     return result;
   }
