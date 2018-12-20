@@ -10,7 +10,8 @@ public interface ApplicationStarter {
 
   static List<ApplicationStarter> sort(List<ApplicationStarter> starters) {
     val result = new LinkedList<ApplicationStarter>();
-    val targets = new LinkedList<ApplicationStarter>(starters);
+    val targets = new LinkedList<ApplicationStarter>();
+    targets.addAll(starters);
 
     outer:
     while (!targets.isEmpty()) {
