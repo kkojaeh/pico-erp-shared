@@ -14,9 +14,10 @@ public interface ApplicationStarter {
     outer:
     while (!targets.isEmpty()) {
       for (ApplicationStarter target : targets) {
-        val hasDependency = target.getDependencies()
-          .stream()
-          .anyMatch(dependency -> targets.stream().anyMatch(t -> t.getId().equals(dependency)));
+        val hasDependency = targets.stream()
+          .map(ApplicationStarter::getId)
+          .filter(id -> target.getDependencies().contains(id))
+          .count() > 0;
         if (!hasDependency) {
           targets.remove(target);
           result.add(target);
