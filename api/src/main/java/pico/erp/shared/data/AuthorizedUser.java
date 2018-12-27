@@ -14,4 +14,8 @@ public interface AuthorizedUser extends UserDetails {
 
   String getPosition();
 
+  boolean hasAnyRole(String... roles);
+
+  boolean hasRole(String role);
+
 }
