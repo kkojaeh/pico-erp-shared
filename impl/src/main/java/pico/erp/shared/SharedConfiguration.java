@@ -98,7 +98,7 @@ public class SharedConfiguration {
   }
 
   @Bean
-  @Profile({"default", "production", "development"})
+  @Profile({"!test"})
   public EventPublisher jmsEventPublisher() {
     return new JmsEventPublisher();
   }
