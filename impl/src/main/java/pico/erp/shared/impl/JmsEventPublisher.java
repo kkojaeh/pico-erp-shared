@@ -1,5 +1,6 @@
 package pico.erp.shared.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -9,6 +10,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import pico.erp.shared.event.Event;
 import pico.erp.shared.event.EventPublisher;
 
+@Slf4j
 public class JmsEventPublisher implements EventPublisher {
 
   @Lazy
@@ -22,11 +24,17 @@ public class JmsEventPublisher implements EventPublisher {
         .registerSynchronization(new TransactionSynchronizationAdapter() {
           @Override
           public void afterCommit() {
+            if (log.isDebugEnabled()) {
+              log.debug("jms event fired {}", event.channel());
+            }
             jmsTemplate.convertAndSend(new ActiveMQTopic(event.channel()), event);
           }
 
         });
     } else {
+      if (log.isDebugEnabled()) {
+        log.debug("jms event fired {}", event.channel());
+      }
       jmsTemplate.convertAndSend(new ActiveMQTopic(event.channel()), event);
     }
 
