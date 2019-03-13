@@ -28,7 +28,7 @@ dependencies {
   compile('com.zaxxer:HikariCP:2.7.6')
 
   // 데이터베이스 로깅
-  runtime('p6spy:p6spy:3.0.0')
+  runtime('p6spy:p6spy:3.8.1')
 
   compile("com.googlecode.libphonenumber:libphonenumber:${libphonenumberVersion}")
 
