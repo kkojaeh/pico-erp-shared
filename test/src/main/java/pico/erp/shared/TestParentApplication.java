@@ -83,20 +83,19 @@ public class TestParentApplication implements
 
   private void transactionManager(ConfigurableApplicationContext parent,
     Set<ConfigurableApplicationContext> components) {
-    val builder = BeanDefinitionBuilder.rootBeanDefinition(ChainedTransactionManager.class);
+    val transactionManagers = components.stream()
+      .filter(
+        component -> component.getBeanNamesForType(PlatformTransactionManager.class).length > 0)
+      .map(component -> component.getBean(PlatformTransactionManager.class))
+      .toArray(size -> new PlatformTransactionManager[size]);
 
-    builder.addConstructorArgValue(
-      components.stream()
-        .filter(
-          component -> component.getBeanNamesForType(PlatformTransactionManager.class).length > 0)
-        .map(component -> component.getBean(PlatformTransactionManager.class))
-        .toArray(size -> new PlatformTransactionManager[size])
-    );
+    val builder = BeanDefinitionBuilder.genericBeanDefinition(PlatformTransactionManager.class,
+      () -> new ChainedTransactionManager(transactionManagers));
 
     val beanDefinition = builder.getBeanDefinition();
     beanDefinition.setPrimary(true);
     ((BeanDefinitionRegistry) parent)
-      .registerBeanDefinition("chainedTransactionManager", beanDefinition);
+      .registerBeanDefinition("transactionManager", beanDefinition);
   }
 
   static class SpringApplicationBroadcastEventPublisher implements EventPublisher {
