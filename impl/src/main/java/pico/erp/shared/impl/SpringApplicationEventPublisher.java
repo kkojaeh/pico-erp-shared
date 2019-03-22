@@ -6,7 +6,7 @@ import pico.erp.shared.event.Event;
 import pico.erp.shared.event.EventPublisher;
 
 @AllArgsConstructor
-public class EventPublisherImpl implements EventPublisher {
+public class SpringApplicationEventPublisher implements EventPublisher {
 
   private final ApplicationEventPublisher applicationEventPublisher;
 

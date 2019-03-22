@@ -16,6 +16,7 @@ import org.apache.activemq.broker.region.virtual.VirtualTopic;
 import org.apache.activemq.transport.vm.VMTransportFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
@@ -36,14 +37,13 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.util.ErrorHandler;
 import pico.erp.shared.event.EventPublisher;
-import pico.erp.shared.impl.DelegateEventPublisher;
-import pico.erp.shared.impl.EventPublisherImpl;
 import pico.erp.shared.impl.ExportHelperImpl;
 import pico.erp.shared.impl.JmsEventPublisher;
 import pico.erp.shared.impl.LocalDateConverter;
 import pico.erp.shared.impl.LocalTimeConverter;
 import pico.erp.shared.impl.OffsetDateTimeConverter;
 import pico.erp.shared.impl.QueryDslJpaSupportImpl;
+import pico.erp.shared.impl.SpringApplicationEventPublisher;
 import pico.erp.shared.jpa.AuditorAwareImpl;
 import pico.erp.shared.jpa.QueryDslJpaSupport;
 
@@ -87,9 +87,10 @@ public class SharedConfiguration {
   }
 
   @Bean
+  @ConditionalOnMissingBean(EventPublisher.class)
   @Profile("test")
   public EventPublisher eventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-    return new DelegateEventPublisher(new EventPublisherImpl(applicationEventPublisher));
+    return new SpringApplicationEventPublisher(applicationEventPublisher);
   }
 
   @Bean
@@ -99,6 +100,7 @@ public class SharedConfiguration {
 
   @Bean
   @Profile({"!test"})
+  @ConditionalOnMissingBean(EventPublisher.class)
   public EventPublisher jmsEventPublisher() {
     return new JmsEventPublisher();
   }
@@ -124,7 +126,6 @@ public class SharedConfiguration {
     converter.setObjectMapper(mapper);
     converter.setTargetType(MessageType.TEXT);
     converter.setTypeIdPropertyName("_type");
-    // return new AMQDelayedMessageConverter(converter);
     return converter;
   }
 
