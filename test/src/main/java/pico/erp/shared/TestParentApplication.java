@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.AbstractResourceBasedMessageSource;
 import org.springframework.data.transaction.ChainedTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -34,6 +35,7 @@ import pico.erp.shared.event.EventPublisher;
   DataSourceTransactionManagerAutoConfiguration.class,
   TaskExecutionAutoConfiguration.class,
   TaskSchedulingAutoConfiguration.class})
+@ComponentScan(useDefaultFilters = false)
 public class TestParentApplication implements
   ApplicationListener<SpringBootComponentParentReadyEvent> {
 
@@ -42,7 +44,7 @@ public class TestParentApplication implements
   }
 
   @Bean
-  public EventPublisher eventPublisher() {
+  public EventPublisher testBroadCastEventPublisher() {
     return new SpringApplicationBroadcastEventPublisher();
   }
 
