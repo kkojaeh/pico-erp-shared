@@ -1,23 +1,27 @@
+plugins {
+  id 'java'
+  id 'groovy'
+  id "net.ltgt.apt"
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+  id 'io.github.divinespear.jpa-schema-generate'
+}
+
 ext {
   libphonenumberVersion = '8.9.4'
   flywayVersion = '5.0.7'
   jxlsVersion = '2.4.3'
   jxlsPoiVersion = '1.0.14'
-  xceliteVersion = '1.0.4'
   windmillVersion = '1.2.0'
 }
 
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: "net.ltgt.apt"
-apply plugin: 'net.ltgt.apt-idea'
-apply plugin: "io.github.divinespear.jpa-schema-generate"
-
-apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/master/impl.gradle'
+apply from: 'https://rawgit.com/kkojaeh/pico-erp-gradle/spring-boot-2/impl.gradle'
 
 dependencies {
 
   compile project(':api')
+
+  compile("com.github.kkojaeh:spring-boot-component:0.0.3")
 
   compile('org.springframework.boot:spring-boot-starter-data-jpa') {
     exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
@@ -47,8 +51,6 @@ dependencies {
   compile("org.jxls:jxls:${jxlsVersion}")
 
   compile("org.jxls:jxls-poi:${jxlsPoiVersion}")
-
-  compile("com.ebay:xcelite:${xceliteVersion}")
 
   compile("com.coreoz:windmill:${windmillVersion}")
 

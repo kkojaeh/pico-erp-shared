@@ -1,11 +1,11 @@
 package pico.erp.shared.jpa;
 
 import java.security.Key;
+import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.persistence.AttributeConverter;
-import org.springframework.security.crypto.codec.Base64;
 
 public class CrytoAttributeConverter implements AttributeConverter<String, String> {
 
@@ -35,7 +35,7 @@ public class CrytoAttributeConverter implements AttributeConverter<String, Strin
     try {
       final Cipher c = Cipher.getInstance(ALGORITHM);
       c.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(KEY));
-      return new String(Base64.encode(c.doFinal(sensitive.getBytes())), "UTF-8");
+      return new String(Base64.getEncoder().encode(c.doFinal(sensitive.getBytes())), "UTF-8");
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -54,7 +54,7 @@ public class CrytoAttributeConverter implements AttributeConverter<String, Strin
       final Cipher c = Cipher.getInstance(ALGORITHM);
 
       c.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(KEY));
-      return new String(c.doFinal(Base64.decode(sensitive.getBytes("UTF-8"))));
+      return new String(c.doFinal(Base64.getDecoder().decode(sensitive.getBytes("UTF-8"))));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
