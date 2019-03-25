@@ -7,7 +7,7 @@ import java.util.Date;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 
-public class OffsetDateTimeConverter implements Converter<String, OffsetDateTime> {
+public class StringOffsetDateTimeConverter implements Converter<String, OffsetDateTime> {
 
   private final StdDateFormat formatter = new StdDateFormat();
 

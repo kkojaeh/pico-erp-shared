@@ -37,13 +37,16 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.util.ErrorHandler;
 import pico.erp.shared.event.EventPublisher;
+import pico.erp.shared.impl.DateLocalDateConverter;
+import pico.erp.shared.impl.DateLocalTimeConverter;
+import pico.erp.shared.impl.DateOffsetDateTimeConverter;
 import pico.erp.shared.impl.ExportHelperImpl;
 import pico.erp.shared.impl.JmsEventPublisher;
-import pico.erp.shared.impl.LocalDateConverter;
-import pico.erp.shared.impl.LocalTimeConverter;
-import pico.erp.shared.impl.OffsetDateTimeConverter;
 import pico.erp.shared.impl.QueryDslJpaSupportImpl;
 import pico.erp.shared.impl.SpringApplicationEventPublisher;
+import pico.erp.shared.impl.StringLocalDateConverter;
+import pico.erp.shared.impl.StringLocalTimeConverter;
+import pico.erp.shared.impl.StringOffsetDateTimeConverter;
 import pico.erp.shared.jpa.AuditorAwareImpl;
 import pico.erp.shared.jpa.QueryDslJpaSupport;
 
@@ -130,15 +133,36 @@ public class SharedConfiguration {
   }
 
   @Bean
-  @ConfigurationPropertiesBinding
-  public Converter localDateConverter() {
-    return new LocalDateConverter();
+  public Converter dateLocalDateConverter() {
+    return new DateLocalDateConverter();
+  }
+
+  @Bean
+  public Converter dateLocalTimeConverter() {
+    return new DateLocalTimeConverter();
+  }
+
+  @Bean
+  public Converter dateOffsetDateTimeConverter() {
+    return new DateOffsetDateTimeConverter();
   }
 
   @Bean
   @ConfigurationPropertiesBinding
-  public Converter localTimeConverter() {
-    return new LocalTimeConverter();
+  public Converter stringLocalDateConverter() {
+    return new StringLocalDateConverter();
+  }
+
+  @Bean
+  @ConfigurationPropertiesBinding
+  public Converter stringLocalTimeConverter() {
+    return new StringLocalTimeConverter();
+  }
+
+  @Bean
+  @ConfigurationPropertiesBinding
+  public Converter stringOffsetDateTimeConverter() {
+    return new StringOffsetDateTimeConverter();
   }
 
   @Bean
@@ -146,11 +170,6 @@ public class SharedConfiguration {
     return new LoggingErrorHandler();
   }
 
-  @Bean
-  @ConfigurationPropertiesBinding
-  public Converter offsetDateTimeConverter() {
-    return new OffsetDateTimeConverter();
-  }
 
   @Bean
   public QueryDslJpaSupport queryDslJpaSupport() {
