@@ -37,11 +37,9 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.util.ErrorHandler;
 import pico.erp.shared.event.EventPublisher;
-import pico.erp.shared.impl.DateLocalDateConverter;
-import pico.erp.shared.impl.DateLocalTimeConverter;
-import pico.erp.shared.impl.DateOffsetDateTimeConverter;
 import pico.erp.shared.impl.ExportHelperImpl;
 import pico.erp.shared.impl.JmsEventPublisher;
+import pico.erp.shared.impl.LocalDateTimeOffsetDateTimeConverter;
 import pico.erp.shared.impl.QueryDslJpaSupportImpl;
 import pico.erp.shared.impl.SpringApplicationEventPublisher;
 import pico.erp.shared.impl.StringLocalDateConverter;
@@ -133,18 +131,8 @@ public class SharedConfiguration {
   }
 
   @Bean
-  public Converter dateLocalDateConverter() {
-    return new DateLocalDateConverter();
-  }
-
-  @Bean
-  public Converter dateLocalTimeConverter() {
-    return new DateLocalTimeConverter();
-  }
-
-  @Bean
-  public Converter dateOffsetDateTimeConverter() {
-    return new DateOffsetDateTimeConverter();
+  public Converter localDateTimeOffsetDateTimeConverter() {
+    return new LocalDateTimeOffsetDateTimeConverter();
   }
 
   @Bean
