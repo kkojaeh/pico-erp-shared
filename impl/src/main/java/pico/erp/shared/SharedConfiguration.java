@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.sql.DatabaseMetaData;
+import java.time.OffsetDateTime;
 import java.util.Currency;
+import java.util.Optional;
 import javax.jms.ConnectionFactory;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
@@ -39,7 +42,6 @@ import org.springframework.util.ErrorHandler;
 import pico.erp.shared.event.EventPublisher;
 import pico.erp.shared.impl.ExportHelperImpl;
 import pico.erp.shared.impl.JmsEventPublisher;
-import pico.erp.shared.impl.LocalDateTimeOffsetDateTimeConverter;
 import pico.erp.shared.impl.QueryDslJpaSupportImpl;
 import pico.erp.shared.impl.SpringApplicationEventPublisher;
 import pico.erp.shared.impl.StringLocalDateConverter;
@@ -61,6 +63,11 @@ public class SharedConfiguration {
   @Bean
   public AuditorAware auditorAware() {
     return new AuditorAwareImpl();
+  }
+
+  @Bean
+  public DateTimeProvider dateTimeProvider() {
+    return () -> Optional.of(OffsetDateTime.now());
   }
 
   @Bean
@@ -128,11 +135,6 @@ public class SharedConfiguration {
     converter.setTargetType(MessageType.TEXT);
     converter.setTypeIdPropertyName("_type");
     return converter;
-  }
-
-  @Bean
-  public Converter localDateTimeOffsetDateTimeConverter() {
-    return new LocalDateTimeOffsetDateTimeConverter();
   }
 
   @Bean
