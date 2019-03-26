@@ -21,7 +21,7 @@ dependencies {
 
   compile project(':api')
 
-  compile("com.github.kkojaeh:spring-boot-component:0.0.4")
+  compile("com.github.kkojaeh:spring-boot-component:0.0.11")
 
   compile('org.springframework.boot:spring-boot-starter-data-jpa') {
     exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
