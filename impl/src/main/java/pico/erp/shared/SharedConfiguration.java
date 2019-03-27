@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.sql.DatabaseMetaData;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Optional;
 import javax.jms.ConnectionFactory;
@@ -67,7 +67,7 @@ public class SharedConfiguration {
 
   @Bean
   public DateTimeProvider dateTimeProvider() {
-    return () -> Optional.of(OffsetDateTime.now());
+    return () -> Optional.of(LocalDateTime.now());
   }
 
   @Bean
