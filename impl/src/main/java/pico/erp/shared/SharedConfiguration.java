@@ -45,6 +45,7 @@ import pico.erp.shared.impl.JmsEventPublisher;
 import pico.erp.shared.impl.QueryDslJpaSupportImpl;
 import pico.erp.shared.impl.SpringApplicationEventPublisher;
 import pico.erp.shared.impl.StringLocalDateConverter;
+import pico.erp.shared.impl.StringLocalDateTimeConverter;
 import pico.erp.shared.impl.StringLocalTimeConverter;
 import pico.erp.shared.impl.StringOffsetDateTimeConverter;
 import pico.erp.shared.jpa.AuditorAwareImpl;
@@ -153,6 +154,12 @@ public class SharedConfiguration {
   @ConfigurationPropertiesBinding
   public Converter stringOffsetDateTimeConverter() {
     return new StringOffsetDateTimeConverter();
+  }
+
+  @Bean
+  @ConfigurationPropertiesBinding
+  public Converter stringLocalDateTimeConverter() {
+    return new StringLocalDateTimeConverter();
   }
 
   @Bean
