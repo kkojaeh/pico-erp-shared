@@ -7,7 +7,6 @@ import kkojaeh.spring.boot.component.SpringBootComponent;
 import kkojaeh.spring.boot.component.SpringBootComponentParentReadyEvent;
 import lombok.val;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
@@ -22,6 +21,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.AbstractResourceBasedMessageSource;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.data.transaction.ChainedTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import pico.erp.shared.event.Event;
@@ -94,8 +94,13 @@ public class TestParentApplication implements
 
     val beanDefinition = builder.getBeanDefinition();
     beanDefinition.setPrimary(true);
-    ((BeanDefinitionRegistry) parent)
+    ((GenericApplicationContext) parent)
       .registerBeanDefinition("transactionManager", beanDefinition);
+    components.forEach(component -> {
+      val gac = (GenericApplicationContext) component;
+      gac.setAllowBeanDefinitionOverriding(true);
+      gac.registerBeanDefinition("transactionManager", beanDefinition);
+    });
   }
 
   static class SpringApplicationBroadcastEventPublisher implements EventPublisher {
