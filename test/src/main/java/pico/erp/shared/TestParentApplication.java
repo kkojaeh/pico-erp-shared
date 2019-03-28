@@ -2,7 +2,6 @@ package pico.erp.shared;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import kkojaeh.spring.boot.component.SpringBootComponent;
 import kkojaeh.spring.boot.component.SpringBootComponentParentReadyEvent;
 import lombok.val;
@@ -50,14 +49,8 @@ public class TestParentApplication implements
 
   private void eventPublisher(ConfigurableApplicationContext parent,
     Set<ConfigurableApplicationContext> components) {
-    val publishers = components.stream()
-      .filter(
-        component -> component.getBeanNamesForType(ApplicationEventPublisher.class).length > 0)
-      .map(component -> component.getBean(ApplicationEventPublisher.class))
-      .collect(Collectors.toSet());
-
     val publisher = parent.getBean(SpringApplicationBroadcastEventPublisher.class);
-    publisher.publishers.addAll(publishers);
+    publisher.publishers.addAll(components);
   }
 
   private void messageSource(ConfigurableApplicationContext parent,
